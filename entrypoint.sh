@@ -39,4 +39,5 @@ for script in /etc/config-local/*.sh; do
   fi
 done
 
-exec gosu "${USERNAME}" "${@}"
+exec gosu "${USERNAME}" env HOME="${USER_HOME}" USER="${USERNAME}" LOGNAME="${USERNAME}" \
+  SHELL="/bin/zsh" "${@}"

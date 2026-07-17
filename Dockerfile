@@ -22,4 +22,4 @@ COPY ./config-local/ /etc/config-local/
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/zsh", "--login"]
+CMD ["/bin/zsh", "-ic", "exec paseo daemon start --foreground"]

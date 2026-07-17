@@ -27,3 +27,4 @@ noninteractive https://pi.dev/install.sh sh
 CODEX_NON_INTERACTIVE=1 noninteractive https://chatgpt.com/codex/install.sh sh
 noninteractive https://claude.ai/install.sh bash
 noninteractive https://antigravity.google/cli/install.sh bash
+npm install -g @getpaseo/cli
