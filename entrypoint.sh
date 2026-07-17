@@ -2,15 +2,15 @@
 set -e
 
 USERID=${USERID:-1000}
-GID=${USERID:-1000}
+GRPID=${USERID:-1000}
 USERNAME=${USERNAME:-"chiwanpark"}
 
 # remap user id, group id and username.
-if ! getent group "${USERID}" >/dev/null 2>&1; then
-  groupadd -g ${USERID} ${USERNAME}
+if ! getent group "${GRPID}" >/dev/null 2>&1; then
+  groupadd -g ${GRPID} ${USERNAME}
 fi
 if ! getent passwd "${USERID}" >/dev/null 2>&1; then
-  useradd -u "${USERID}" -g "${GID}" -m -s /bin/zsh ${USERNAME}
+  useradd -u "${USERID}" -g "${GRPID}" -m -s /bin/zsh ${USERNAME}
 fi
 
 # Allow the configured user to run sudo without a password.
@@ -19,12 +19,12 @@ chmod 0440 "/etc/sudoers.d/${USERNAME}"
 
 # Add the current user to "docker" group if the socket is accessible.
 if [ -S /var/run/docker.sock ]; then
-  DOCKER_GID=$(stat -c '%g' /var/run/docker.sock)
-  EXISTING_GRP=$(getent group "${DOCKER_GID}" | cut -d: -f1)
+  DOCKER_GRPID=$(stat -c '%g' /var/run/docker.sock)
+  EXISTING_GRP=$(getent group "${DOCKER_GRPID}" | cut -d: -f1)
   if [ -n "${EXISTING_GROUP}" ]; then 
     usermod -aG "${EXISTING_GROUP}" ${USERNAME}
   else
-    groupadd -g "${DOCKER_GID}" docker
+    groupadd -g "${DOCKER_GRPID}" docker
     usermod -aG docker ${USERNAME}
   fi
 fi
