@@ -43,6 +43,27 @@ if [ -S /var/run/docker.sock ]; then
   usermod -aG "${DOCKER_GROUP}" "${USER_NAME}"
 fi
 
+# Group names are container-local, so use the host video's numeric GID.
+# Pass it as VIDEO_GID, for example: -e VIDEO_GID="$(getent group video | cut -d: -f3)".
+if [ -n "${VIDEO_GID:-}" ]; then
+  case "${VIDEO_GID}" in
+    *[!0-9]*)
+      printf 'VIDEO_GID must be a numeric group ID, got: %s\n' "${VIDEO_GID}" >&2
+      exit 1
+      ;;
+  esac
+
+  VIDEO_GROUP=$(getent group "${VIDEO_GID}" | cut -d: -f1)
+  if [ -z "${VIDEO_GROUP}" ]; then
+    VIDEO_GROUP="video-host"
+    if getent group "${VIDEO_GROUP}" >/dev/null 2>&1; then
+      VIDEO_GROUP="video-host-${VIDEO_GID}"
+    fi
+    groupadd -g "${VIDEO_GID}" "${VIDEO_GROUP}"
+  fi
+  usermod -aG "${VIDEO_GROUP}" "${USER_NAME}"
+fi
+
 PERSIST_DIR=${PERSIST_DIR:-"/mnt/persistent"}
 for dir in .pi .claude .gemini .codex .paseo; do
   persistent_path="${PERSIST_DIR}/${dir}"
