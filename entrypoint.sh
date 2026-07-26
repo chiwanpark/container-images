@@ -83,23 +83,23 @@ if [ -n "${RENDER_GID:-}" ]; then
   usermod -aG "${RENDER_GROUP}" "${USER_NAME}"
 fi
 
-PERSIST_DIR=${PERSIST_DIR:-"/mnt/persistent"}
-for dir in .pi .claude .gemini .codex .paseo; do
-  persistent_path="${PERSIST_DIR}/${dir}"
+DOTROOT=${DOTROOT:-"/mnt/dot"}
+for dir in .pi .claude .gemini .codex .paseo .ssh; do
+  dotroot_path="${DOTROOT}/${dir}"
   home_path="${USER_HOME}/${dir}"
 
-  mkdir -p "${persistent_path}"
+  mkdir -p "${dotroot_path}"
   if [ -e "${home_path}" ] && [ ! -L "${home_path}" ]; then
     printf 'Cannot link %s: the path already exists and is not a symbolic link\n' \
       "${home_path}" >&2
     exit 1
   fi
-  ln -sfn "${persistent_path}" "${home_path}"
+  ln -sfn "${dotroot_path}" "${home_path}"
 done
 
 # Avoid rewriting ownership metadata that is already correct. Do not cross into
 # nested mounts that may exist below the persistent or home directories.
-find "${PERSIST_DIR}" "${USER_HOME}" -xdev \
+find "${DOTROOT}" "${USER_HOME}" -xdev \
   \( ! -uid "${USER_UID}" -o ! -gid "${USER_GID}" \) \
   -exec chown -h "${USER_UID}:${USER_GID}" {} +
 
