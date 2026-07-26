@@ -8,8 +8,8 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 curl -LsSf https://astral.sh/uv/install.sh | sh
 cd ${HOME}
 source ${HOME}/.local/bin/env
-uv venv --python ${PYTHON_VERSION}
-source ${HOME}/.venv/bin/activate
+uv python install ${PYTHON_VERSION}
 
 # install Python tools
-uv pip install "python-lsp-server[all]" neovim
+uv tool install "python-lsp-server[all]"
+uv tool install huggingface_hub
