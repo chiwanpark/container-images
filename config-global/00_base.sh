@@ -13,6 +13,7 @@ echo "Asia/Seoul" | tee /etc/timezone
 DEBIAN_FRONTEND=noninteractive apt-get install -y \
   -o Dpkg::Options::="--force-confold" \
   -o Dpkg::Options::="--force-confdef" \
+  --no-install-recommends \
   curl tmux zsh git build-essential btop locales tzdata lsb-release cmake libomp-dev clangd \
   apt-transport-https ca-certificates debian-keyring fzf openssh-client sudo libbz2-dev \
   libsnappy-dev liblz4-dev zlib1g-dev libzstd-dev nginx gettext-base tree jq ripgrep fd-find gosu \
