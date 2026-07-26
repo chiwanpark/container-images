@@ -63,6 +63,25 @@ if [ -n "${VIDEO_GID:-}" ]; then
   fi
   usermod -aG "${VIDEO_GROUP}" "${USER_NAME}"
 fi
+# Same configuration for render group.
+if [ -n "${RENDER_GID:-}" ]; then
+  case "${RENDER_GID}" in
+    *[!0-9]*)
+      printf 'RENDER_GID must be a numeric group ID, got: %s\n' "${RENDER_GID}" >&2
+      exit 1
+      ;;
+  esac
+
+  RENDER_GROUP=$(getent group "${RENDER_GID}" | cut -d: -f1)
+  if [ -z "${RENDER_GROUP}" ]; then
+    RENDER_GROUP="render-host"
+    if getent group "${RENDER_GROUP}" >/dev/null 2>&1; then
+      RENDER_GROUP="render-host-${RENDER_GID}"
+    fi
+    groupadd -g "${RENDER_GID}" "${RENDER_GROUP}"
+  fi
+  usermod -aG "${RENDER_GROUP}" "${USER_NAME}"
+fi
 
 PERSIST_DIR=${PERSIST_DIR:-"/mnt/persistent"}
 for dir in .pi .claude .gemini .codex .paseo; do
