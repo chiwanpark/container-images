@@ -18,6 +18,10 @@ RUN cd /tmp/workbench/ \
 # user configuration
 COPY ./config-local/ /etc/config-local/
 
+# utility commands
+COPY ./bin/kill-zombies /usr/local/bin/kill-zombies
+RUN chmod 0755 /usr/local/bin/kill-zombies
+
 # entrypoint
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod +x /usr/bin/entrypoint.sh

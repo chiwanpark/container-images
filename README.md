@@ -7,3 +7,4 @@ Personalized container environments for Chiwan Park.
 - zsh as default shell
 - personal [dotfiles](https://github.com/chiwanpark/dotfiles) for a better terminal experience
 - uv-based Python environment
+- `kill-zombies` utility for reaping zombie processes in containers
