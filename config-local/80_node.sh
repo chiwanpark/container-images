@@ -8,7 +8,7 @@ NODE_VERSION="24"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash
 source ${HOME}/.nvm/nvm.sh
 nvm install ${NODE_VERSION}
-nvm use ${NODE_VERSION} --default
+nvm use ${NODE_VERSION}
 
 # node.js environment
 npm install -g yarn pnpm neovim tree-sitter-cli \

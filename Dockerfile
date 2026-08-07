@@ -26,4 +26,4 @@ RUN chmod 0755 /usr/local/bin/kill-zombies
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/zsh", "-ic", "exec paseo daemon start --foreground"]
+CMD ["/bin/zsh", "-ic", "source ~/.nvm/nvm.sh; nvm use node; exec paseo daemon start --foreground"]
