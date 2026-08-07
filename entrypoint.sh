@@ -84,7 +84,7 @@ if [ -n "${RENDER_GID:-}" ]; then
 fi
 
 DOTROOT=${DOTROOT:-"/mnt/dot"}
-for dir in .pi .claude .gemini .codex .paseo .ssh; do
+for dir in .pi .claude .gemini .codex .paseo .ssh .aws; do
   dotroot_path="${DOTROOT}/${dir}"
   home_path="${USER_HOME}/${dir}"
 
