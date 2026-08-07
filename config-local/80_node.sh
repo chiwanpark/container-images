@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-NVM_VERSION="0.40.5"
+NVM_VERSION="0.40.6"
 NODE_VERSION="24"
 
 # install nvm and Node.js
