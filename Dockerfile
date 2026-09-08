@@ -59,10 +59,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-# paseo
-RUN npm install -g @getpaseo/cli \
- && npm cache clean --force
-
 # agent-browser
 ARG AGENT_BROWSER_VERSION=0.37.0
 RUN npm install -g "agent-browser@${AGENT_BROWSER_VERSION}" \
