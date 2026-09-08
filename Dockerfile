@@ -91,7 +91,7 @@ RUN case "${TARGETARCH}" in \
  && rm -rf /tmp/awscliv2.zip /tmp/aws /tmp/aws-sam-cli.zip /tmp/sam-installation
 
 # golang
-ARG GO_VERSION=1.26.5
+ARG GO_VERSION=1.27.1
 RUN curl -fsSL -o /tmp/go.tar.gz "https://go.dev/dl/go${GO_VERSION}.linux-${TARGETARCH}.tar.gz" \
  && tar -C /usr/local -xzf /tmp/go.tar.gz \
  && rm -f /tmp/go.tar.gz
@@ -114,7 +114,7 @@ RUN curl -fsSL -o /usr/bin/kubectl "https://dl.k8s.io/release/v${KUBECTL_VERSION
  && rm -f /tmp/k9s.deb
 
 # neovim
-ARG NEOVIM_VERSION=0.12.4
+ARG NEOVIM_VERSION=0.12.5
 RUN case "${TARGETARCH}" in \
       amd64) nvim_arch="x86_64" ;; \
       arm64) nvim_arch="arm64" ;; \
