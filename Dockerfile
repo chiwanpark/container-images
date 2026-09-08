@@ -1,3 +1,6 @@
+ARG UV_VERSION=0.12.10
+FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
+
 FROM debian:13
 
 LABEL maintainer="Chiwan Park <chiwanpark@hotmail.com>"
@@ -71,6 +74,9 @@ RUN npm install -g "agent-browser@${AGENT_BROWSER_VERSION}" \
  && npm cache clean --force \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+# uv
+COPY --from=uv /uv /uvx /usr/local/bin/
 
 # aws cli and sam cli
 ARG AWS_CLI_VERSION=2.36.40
