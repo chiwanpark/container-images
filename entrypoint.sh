@@ -113,7 +113,7 @@ CONFIG_STATE_DIR="${USER_HOME}/.local/state/container-config"
 gosu "${USER_NAME}" mkdir -p "${CONFIG_STATE_DIR}"
 config_hash=""
 
-for script in /etc/config-local/*.sh; do
+for script in /etc/config/*.sh; do
   if [ -f "${script}" ]; then
     script_name=$(basename "${script}")
     script_content_hash=$(sha256sum "${script}" | cut -d' ' -f1)

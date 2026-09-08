@@ -130,7 +130,7 @@ RUN case "${TARGETARCH}" in \
  && rm -f /tmp/nvim.tar.gz
 
 # user configuration
-COPY ./config-local/ /etc/config-local/
+COPY ./config/ /etc/config/
 
 # utility commands
 COPY --chmod=0755 ./bin/kill-zombies /usr/local/bin/kill-zombies
