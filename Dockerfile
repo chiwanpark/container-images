@@ -18,7 +18,7 @@ RUN apt-get update \
       curl tmux zsh git build-essential btop locales tzdata lsb-release cmake libomp-dev clangd \
       apt-transport-https ca-certificates debian-keyring fzf openssh-client sudo libbz2-dev \
       libsnappy-dev liblz4-dev zlib1g-dev libzstd-dev nginx gettext-base tree jq ripgrep fd-find gosu \
-      tree-sitter-cli procps python3 python3-pynvim rocm-smi rocminfo unzip zip \
+      procps python3 python3-pynvim rocm-smi rocminfo unzip zip \
  && sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
  && locale-gen \
  && apt-get clean \
@@ -43,6 +43,32 @@ RUN install -m 0755 -d /etc/apt/keyrings \
       > /etc/apt/sources.list.d/github-cli.list \
  && apt-get update \
  && apt-get install -y --no-install-recommends gh \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+# node.js
+ARG NODE_VERSION=24
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
+ && apt-get install -y --no-install-recommends nodejs \
+ && npm install -g yarn pnpm neovim tree-sitter-cli \
+      typescript-language-server typescript svelte-language-server @tailwindcss/language-server \
+ && npm cache clean --force \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+# paseo
+RUN npm install -g @getpaseo/cli \
+ && npm cache clean --force
+
+# agent-browser
+ARG AGENT_BROWSER_VERSION=0.37.0
+RUN npm install -g "agent-browser@${AGENT_BROWSER_VERSION}" \
+ && mkdir -p /opt/agent-browser \
+ && HOME=/opt/agent-browser agent-browser install --with-deps \
+ && mv /opt/agent-browser/.agent-browser/browsers /opt/agent-browser/browsers \
+ && rm -rf /opt/agent-browser/.agent-browser \
+ && chmod -R a+rX /opt/agent-browser \
+ && npm cache clean --force \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -106,4 +132,4 @@ COPY --chmod=0755 ./bin/kill-zombies /usr/local/bin/kill-zombies
 # entrypoint
 COPY --chmod=0755 entrypoint.sh /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/zsh", "-ic", "source ~/.nvm/nvm.sh; nvm use node; exec paseo daemon start --foreground"]
+CMD ["/bin/zsh", "-ic", "exec paseo daemon start --foreground"]

@@ -84,7 +84,7 @@ if [ -n "${RENDER_GID:-}" ]; then
 fi
 
 DOTROOT=${DOTROOT:-"/mnt/dot"}
-for dir in .pi .claude .gemini .codex .paseo .ssh .aws; do
+for dir in .pi .claude .gemini .codex .paseo .ssh .aws .agent-browser; do
   dotroot_path="${DOTROOT}/${dir}"
   home_path="${USER_HOME}/${dir}"
 
@@ -96,6 +96,11 @@ for dir in .pi .claude .gemini .codex .paseo .ssh .aws; do
   fi
   ln -sfn "${dotroot_path}" "${home_path}"
 done
+
+# Share the browser downloaded at build time instead of refetching it per user.
+if [ -d /opt/agent-browser/browsers ]; then
+  ln -sfn /opt/agent-browser/browsers "${DOTROOT}/.agent-browser/browsers"
+fi
 
 # Avoid rewriting ownership metadata that is already correct. Do not cross into
 # nested mounts that may exist below the persistent or home directories.
