@@ -21,6 +21,8 @@ noninteractive() {
 }
 
 noninteractive https://pi.dev/install.sh sh
+mkdir -p "$HOME/.local/bin"
+ln -sfn "$HOME/.pi/agent/bin/pi" "$HOME/.local/bin/pi"
 CODEX_NON_INTERACTIVE=1 noninteractive https://chatgpt.com/codex/install.sh sh
 noninteractive https://claude.ai/install.sh bash
 noninteractive https://antigravity.google/cli/install.sh bash

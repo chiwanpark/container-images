@@ -134,4 +134,4 @@ COPY --chmod=0755 ./bin/kill-zombies /usr/local/bin/kill-zombies
 # entrypoint
 COPY --chmod=0755 entrypoint.sh /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/zsh", "-ic", "exec paseo daemon start --foreground"]
+CMD ["/bin/zsh", "-ic", "exec paseo daemon run --home ~/.paseo"]
