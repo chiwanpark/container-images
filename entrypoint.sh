@@ -84,11 +84,11 @@ if [ -n "${RENDER_GID:-}" ]; then
 fi
 
 DOTROOT=${DOTROOT:-"/mnt/dot"}
-for dir in .pi .claude .gemini .codex .paseo .ssh .aws .agent-browser .kube; do
+for dir in .pi .claude .gemini .codex .paseo .ssh .aws .agent-browser .kube .config/gh; do
   dotroot_path="${DOTROOT}/${dir}"
   home_path="${USER_HOME}/${dir}"
 
-  mkdir -p "${dotroot_path}"
+  mkdir -p "${dotroot_path}" "$(dirname "${home_path}")"
   if [ -e "${home_path}" ] && [ ! -L "${home_path}" ]; then
     printf 'Cannot link %s: the path already exists and is not a symbolic link\n' \
       "${home_path}" >&2
