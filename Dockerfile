@@ -131,7 +131,11 @@ COPY ./config/ /etc/config/
 # utility commands
 COPY --chmod=0755 ./bin/kill-zombies /usr/local/bin/kill-zombies
 
+COPY ./lib/agent-process-title.cjs /usr/local/lib/agent-process-title.cjs
+ENV AGENT_SUPERVISOR_TITLE="paseo-supervisor" \
+    AGENT_DAEMON_TITLE="paseo-daemon"
+
 # entrypoint
 COPY --chmod=0755 entrypoint.sh /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/zsh", "-ic", "exec paseo daemon run --home ~/.paseo"]
+CMD ["/bin/zsh", "-ic", "exec env NODE_OPTIONS=\"--require /usr/local/lib/agent-process-title.cjs ${NODE_OPTIONS:-}\" paseo daemon run --home ~/.paseo"]
