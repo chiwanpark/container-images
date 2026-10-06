@@ -1,5 +1,11 @@
 ARG UV_VERSION=0.12.10
+ARG NODE_VERSION=24
 FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
+
+FROM node:${NODE_VERSION}-trixie-slim AS paseo
+ARG PASEO_VERSION=0.10.3
+COPY ./paseo/ /usr/local/share/oesap/
+RUN bash /usr/local/share/oesap/build.sh "${PASEO_VERSION}" /out/oesap
 
 FROM debian:13
 
@@ -50,7 +56,7 @@ RUN install -m 0755 -d /etc/apt/keyrings \
  && rm -rf /var/lib/apt/lists/*
 
 # node.js
-ARG NODE_VERSION=24
+ARG NODE_VERSION
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
  && apt-get install -y --no-install-recommends nodejs \
  && npm install -g yarn pnpm neovim tree-sitter-cli \
@@ -130,12 +136,16 @@ COPY ./config/ /etc/config/
 
 # utility commands
 COPY --chmod=0755 ./bin/kill-zombies /usr/local/bin/kill-zombies
+COPY --from=paseo /out/oesap /usr/local/bin/oesap
+COPY --chmod=0755 ./bin/oesap-update /usr/bin/oesap-update
+COPY ./paseo/ /usr/local/share/oesap/
 
 COPY ./lib/agent-process-title.cjs /usr/local/lib/agent-process-title.cjs
-ENV AGENT_SUPERVISOR_TITLE="paseo-supervisor" \
+ENV PASEO_CLI="/usr/local/bin/oesap" \
+    AGENT_SUPERVISOR_TITLE="paseo-supervisor" \
     AGENT_DAEMON_TITLE="paseo-daemon"
 
 # entrypoint
 COPY --chmod=0755 entrypoint.sh /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/zsh", "-ic", "exec env NODE_OPTIONS=\"--require /usr/local/lib/agent-process-title.cjs ${NODE_OPTIONS:-}\" paseo daemon run --home ~/.paseo"]
+CMD ["/bin/zsh", "-ic", "exec env NODE_OPTIONS=\"--require /usr/local/lib/agent-process-title.cjs ${NODE_OPTIONS:-}\" oesap daemon run --home ~/.paseo"]

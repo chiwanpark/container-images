@@ -1,0 +1,15 @@
+{
+  "sea": true,
+  "compress": "Zstd",
+  "assets": [
+    "node_modules/**/*",
+    "node_modules/@getpaseo/server/dist/server/terminal/shell-integration/zsh/.zshenv"
+  ],
+  "ignore": [
+    "**/node_modules/@anthropic-ai/claude-agent-sdk-linux-*/**",
+    "**/*.map",
+    "**/*.d.ts",
+    "**/*.d.mts",
+    "**/*.d.cts"
+  ]
+}

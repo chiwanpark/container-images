@@ -1,0 +1,30 @@
+#!/bin/bash
+set -euo pipefail
+
+binary=/usr/local/bin/oesap
+source_dir=/usr/local/share/oesap
+
+if [ "$#" -gt 1 ] || [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  printf 'usage: %s [version]\n' "$(basename "$0")" >&2
+  exit 2
+fi
+
+if [ "$(id -u)" -ne 0 ]; then
+  printf '%s must run as root. Try: sudo %s %s\n' "$(basename "$0")" "$(basename "$0")" "${1:-}" >&2
+  exit 1
+fi
+
+requested="${1:-latest}"
+if [ "${requested}" = "latest" ]; then
+  requested=$(npm view @getpaseo/cli version)
+fi
+
+current_version=$("${binary}" --version)
+if [ "${requested}" = "${current_version}" ]; then
+  printf 'oesap %s is already installed.\n' "${current_version}"
+  exit 0
+fi
+
+printf 'Building oesap %s (current: %s)...\n' "${requested}" "${current_version}"
+bash "${source_dir}/build.sh" "${requested}" "${binary}"
+printf 'Installed oesap %s to %s. Restart the container to apply it.\n' "$("${binary}" --version)" "${binary}"

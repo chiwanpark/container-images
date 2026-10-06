@@ -1,0 +1,6 @@
+{
+  "name": "oesap",
+  "private": true,
+  "type": "module",
+  "bin": "entry.mjs"
+}
