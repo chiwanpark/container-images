@@ -139,5 +139,10 @@ for script in /etc/config/*.sh; do
   fi
 done
 
+if [ "${1:-}" = "/usr/bin/supervisord" ]; then
+  exec env HOME="${USER_HOME}" USER="${USER_NAME}" LOGNAME="${USER_NAME}" \
+    SHELL="/bin/zsh" "${@}"
+fi
+
 exec gosu "${USER_NAME}" env HOME="${USER_HOME}" USER="${USER_NAME}" LOGNAME="${USER_NAME}" \
   SHELL="/bin/zsh" "${@}"

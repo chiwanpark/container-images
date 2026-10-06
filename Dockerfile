@@ -27,7 +27,7 @@ RUN apt-get update \
       curl tmux zsh git build-essential btop locales tzdata lsb-release cmake libomp-dev clangd \
       apt-transport-https ca-certificates debian-keyring fzf openssh-client sudo libbz2-dev \
       libsnappy-dev liblz4-dev zlib1g-dev libzstd-dev nginx gettext-base tree jq ripgrep fd-find gosu \
-      procps python3 python3-pynvim rocm-smi rocminfo unzip zip \
+      procps python3 python3-pynvim rocm-smi rocminfo unzip zip supervisor \
  && sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
  && locale-gen \
  && apt-get clean \
@@ -133,6 +133,7 @@ RUN case "${TARGETARCH}" in \
 
 # user configuration
 COPY ./config/ /etc/config/
+COPY ./supervisor/ /etc/supervisor/
 
 # utility commands
 COPY --chmod=0755 ./bin/kill-zombies /usr/local/bin/kill-zombies
@@ -141,11 +142,12 @@ COPY --chmod=0755 ./bin/oesap-update /usr/bin/oesap-update
 COPY ./paseo/ /usr/local/share/oesap/
 
 COPY ./lib/agent-process-title.cjs /usr/local/lib/agent-process-title.cjs
+COPY ./lib/supervisor-process-cleanup.py /usr/local/lib/supervisor-process-cleanup.py
 ENV PASEO_CLI="/usr/local/bin/oesap" \
-    AGENT_SUPERVISOR_TITLE="paseo-supervisor" \
-    AGENT_DAEMON_TITLE="paseo-daemon"
+    AGENT_SUPERVISOR_TITLE="codex-supervisor" \
+    AGENT_DAEMON_TITLE="codex-wrap"
 
 # entrypoint
 COPY --chmod=0755 entrypoint.sh /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-CMD ["/bin/zsh", "-ic", "exec env NODE_OPTIONS=\"--require /usr/local/lib/agent-process-title.cjs ${NODE_OPTIONS:-}\" oesap daemon run --home ~/.paseo"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

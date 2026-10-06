@@ -27,4 +27,4 @@ fi
 
 printf 'Building oesap %s (current: %s)...\n' "${requested}" "${current_version}"
 bash "${source_dir}/build.sh" "${requested}" "${binary}"
-printf 'Installed oesap %s to %s. Restart the container to apply it.\n' "$("${binary}" --version)" "${binary}"
+printf 'Installed oesap %s to %s. Run supervisorctl restart oesap to apply it.\n' "$("${binary}" --version)" "${binary}"
