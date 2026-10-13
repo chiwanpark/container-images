@@ -1,0 +1,22 @@
+{
+  "id": "node",
+  "version": "1.0.0",
+  "name": "Node.js (NodeSource)",
+  "description": "Installs Node.js from NodeSource with global npm tools.",
+  "options": {
+    "version": {
+      "type": "string",
+      "proposals": ["24", "22"],
+      "default": "24",
+      "description": "Node.js major version."
+    },
+    "globalPackages": {
+      "type": "string",
+      "default": "yarn pnpm neovim tree-sitter-cli",
+      "description": "Space-separated npm packages to install globally."
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}

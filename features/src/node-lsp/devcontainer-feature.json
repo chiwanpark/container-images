@@ -1,0 +1,27 @@
+{
+  "id": "node-lsp",
+  "version": "1.0.0",
+  "name": "Node.js language servers",
+  "description": "Installs language servers for TypeScript/JavaScript (including React JSX/TSX), Svelte, and Tailwind CSS. Requires Node.js (npm).",
+  "options": {
+    "typescript": {
+      "type": "boolean",
+      "default": true,
+      "description": "Install typescript and typescript-language-server (TypeScript, JavaScript, React)."
+    },
+    "svelte": {
+      "type": "boolean",
+      "default": true,
+      "description": "Install svelte-language-server."
+    },
+    "tailwind": {
+      "type": "boolean",
+      "default": true,
+      "description": "Install @tailwindcss/language-server."
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/chiwanpark/container-images/node"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "cpp-tools",
+  "version": "1.0.0",
+  "name": "C/C++ tools",
+  "description": "Installs CMake, clangd, and OpenMP development files.",
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}

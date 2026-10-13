@@ -1,0 +1,38 @@
+{
+  "name": "container-images",
+  "image": "ghcr.io/chiwanpark/container-images:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "chiwanpark",
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": false,
+      "installOhMyZshConfig": false,
+      "upgradePackages": false
+    },
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    "ghcr.io/chiwanpark/container-images/node:1": {
+      "globalPackages": "@devcontainers/cli"
+    },
+    "ghcr.io/chiwanpark/container-images/pi:1": {},
+    "ghcr.io/chiwanpark/container-images/codex:1": {},
+    "ghcr.io/chiwanpark/container-images/claude:1": {},
+    "ghcr.io/chiwanpark/container-images/antigravity:1": {}
+  },
+  "remoteUser": "chiwanpark",
+  "updateRemoteUserUID": true,
+  "init": true,
+  "containerEnv": {
+    "TZ": "Asia/Seoul"
+  },
+  "initializeCommand": "mkdir -p \"$HOME/.pi\" \"$HOME/.claude\" \"$HOME/.gemini\" \"$HOME/.codex\" \"$HOME/.ssh\" \"$HOME/.config/gh\"",
+  "mounts": [
+    "source=${localEnv:HOME}/.pi,target=/home/chiwanpark/.pi,type=bind",
+    "source=${localEnv:HOME}/.claude,target=/home/chiwanpark/.claude,type=bind",
+    "source=${localEnv:HOME}/.gemini,target=/home/chiwanpark/.gemini,type=bind",
+    "source=${localEnv:HOME}/.codex,target=/home/chiwanpark/.codex,type=bind",
+    "source=${localEnv:HOME}/.ssh,target=/home/chiwanpark/.ssh,type=bind",
+    "source=${localEnv:HOME}/.config/gh,target=/home/chiwanpark/.config/gh,type=bind"
+  ]
+}

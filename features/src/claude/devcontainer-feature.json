@@ -1,0 +1,10 @@
+{
+  "id": "claude",
+  "version": "1.0.0",
+  "name": "Claude Code",
+  "description": "Installs Claude Code for the remote user after the container is created.",
+  "postCreateCommand": "/usr/local/share/claude-feature/post-create.sh",
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}

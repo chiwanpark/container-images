@@ -1,0 +1,23 @@
+{
+  "id": "python",
+  "version": "1.0.0",
+  "name": "Python (uv)",
+  "description": "Installs uv, a uv-managed Python, and python-lsp-server for the remote user.",
+  "options": {
+    "uvVersion": {
+      "type": "string",
+      "proposals": ["latest", "0.12.10"],
+      "default": "0.12.10",
+      "description": "uv version."
+    },
+    "pythonVersion": {
+      "type": "string",
+      "proposals": ["3.14", "3.13"],
+      "default": "3.14",
+      "description": "Python version installed by uv."
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}

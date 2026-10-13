@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+installer=$(mktemp)
+trap 'rm -f "${installer}"' EXIT
+
+curl -fsSL https://antigravity.google/cli/install.sh -o "${installer}"
+setsid --wait bash "${installer}" </dev/null

@@ -1,0 +1,18 @@
+{
+  "id": "google-colab-cli",
+  "version": "1.0.0",
+  "name": "google-colab-cli",
+  "description": "Installs google-colab-cli from PyPI with uv for the remote user. Requires uv.",
+  "options": {
+    "version": {
+      "type": "string",
+      "proposals": ["latest", "0.7.4"],
+      "default": "0.7.4",
+      "description": "google-colab-cli version."
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/chiwanpark/container-images/python"
+  ]
+}

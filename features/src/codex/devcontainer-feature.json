@@ -1,0 +1,10 @@
+{
+  "id": "codex",
+  "version": "1.0.0",
+  "name": "Codex CLI",
+  "description": "Installs Codex CLI for the remote user after the container is created.",
+  "postCreateCommand": "/usr/local/share/codex-feature/post-create.sh",
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}

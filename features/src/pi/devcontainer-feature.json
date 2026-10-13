@@ -1,0 +1,11 @@
+{
+  "id": "pi",
+  "version": "1.0.0",
+  "name": "pi",
+  "description": "Installs pi for the remote user after the container is created. Requires Node.js (npm).",
+  "postCreateCommand": "/usr/local/share/pi-feature/post-create.sh",
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/chiwanpark/container-images/node"
+  ]
+}

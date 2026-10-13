@@ -1,0 +1,21 @@
+{
+  "id": "agent-browser",
+  "version": "1.0.0",
+  "name": "agent-browser",
+  "description": "Installs agent-browser with a bundled Chrome. Requires Node.js (npm).",
+  "options": {
+    "version": {
+      "type": "string",
+      "proposals": ["latest", "0.39.0"],
+      "default": "0.39.0",
+      "description": "agent-browser version."
+    }
+  },
+  "containerEnv": {
+    "AGENT_BROWSER_EXECUTABLE_PATH": "/opt/agent-browser/chrome/chrome"
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/chiwanpark/container-images/node"
+  ]
+}
