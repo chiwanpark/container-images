@@ -12,6 +12,7 @@ RUN apt-get update \
       libbz2-dev libsnappy-dev liblz4-dev zlib1g-dev libzstd-dev \
  && sed -i 's/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
  && locale-gen \
+ && install -m 0755 -d /etc/skel/.config \
  && install -m 0755 -d /etc/apt/keyrings \
  && curl -fsSL -o /etc/apt/keyrings/docker.asc https://download.docker.com/linux/debian/gpg \
  && curl -fsSL -o /etc/apt/keyrings/githubcli-archive-keyring.gpg https://cli.github.com/packages/githubcli-archive-keyring.gpg \
